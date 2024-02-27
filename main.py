@@ -55,7 +55,7 @@ def word_count_reduce(group):
     NOTE: you should use call the `reduce` function here.
     """
     token, ones_list = group
-    count = reduce(lambda x, y: x + y, ones_list)
+    count = reduce(lambda x, y: x + y, 0, ones_list)
     return token, count
     
     
@@ -125,17 +125,11 @@ def sentiment_map(doc,
     >>> sentiment_map('it was a terrible waste of time')
     [('negative', 1), ('negative', 1)]
     """
-    tokens = doc.split()
-    
-    sentiment_counts = defaultdict(int)
-    
-    for token in tokens:
-        if token in pos_terms:
-            sentiment_counts['positive'] += 1
-        elif token in neg_terms:
-            sentiment_counts['negative'] += 1
-    
-    sentiment_list = [('positive', sentiment_counts['positive']), ('negative', sentiment_counts['negative'])]
-    
-    return sentiment_list
+    sentiment_counts = []
+    for term in doc.split():
+        if term in pos_terms:
+            sentiment_counts.append(('positive', 1))
+        elif term in neg_terms:
+            sentiment_counts.append(('negative', 1))
+    return sentiment_counts
 
